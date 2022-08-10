@@ -61,14 +61,14 @@ body {
 
 }
 
-.current-screen {
+#current-screen {
   width: 100%;
   min-height: 60px;
   font-size: 50px;
   overflow: hidden;
 }
 
-.previous-screen {
+#previous-screen {
   width: 100%;
   min-height: 20px;
   font-size: 20px;

@@ -5,6 +5,32 @@ let currentOperator = null;
 let displayValue = '';
 let resetScreen = false;
 
+//Query Selectors
+const currentScreen = document.getElementById('current-screen')
+const previousScreen = document.getElementById('previous-screen')
+const numberButtons = document.querySelectorAll('.number')
+//Functions
+
+
+numberButtons.forEach((button) =>
+  button.addEventListener('click', displayNumber(button.textContent))
+
+)
+
+function displayNumber(number) {
+  if (currentScreen.textContent === '0' || resetScreen) {
+    resetScreen();
+  }
+  currentScreen.textContent += number;
+}
+function screenReset() {
+  currentScreen.textContent = '';
+  resetScreen = false;
+}
+
+
+
+
 function operate(operation, operandone, operandtwo) {
 
 }
