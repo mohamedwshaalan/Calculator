@@ -46,17 +46,17 @@ body {
 }
 
 .screen {
-  display: inline-block;
-  padding: 5px;
+  display: grid;
+  justify-items: end;
   border: 2px solid darkcyan;
-  color: black;
-  background-color: white;
   width: 80%;
   height: 80%;
+  padding: 5px;
+  background-color: white;
+  color: black;
   border-radius: 10px;
   text-align: right;
-  word-wrap: break-word;
-  word-break: break-all;
+  overflow: hidden;
 
 
 }
@@ -65,12 +65,15 @@ body {
   width: 100%;
   min-height: 60px;
   font-size: 50px;
+  overflow: hidden;
 }
 
 .previous-screen {
   width: 100%;
   min-height: 20px;
   font-size: 20px;
+  overflow: hidden;
+  background-color: darkgray;
 }
 
 button {
