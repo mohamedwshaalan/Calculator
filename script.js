@@ -9,18 +9,24 @@ let resetScreen = false;
 const currentScreen = document.getElementById('current-screen')
 const previousScreen = document.getElementById('previous-screen')
 const numberButtons = document.querySelectorAll('.number')
+const operationButtons = document.querySelectorAll('.arithmetic')
 const pointButton = document.querySelector('.point')
 const clearButton = document.getElementById('clear')
 const deleteButton = document.getElementById('delete')
+const equalsButton = document.getElementById('equal')
 //Functions
-pointButton.addEventListener('click', () => appendPoint());
-deleteButton.addEventListener('click', () => deletefunc());
-clearButton.addEventListener('click', () => clearfunc());
+window.addEventListener('keydown', keyboardInput)
+pointButton.addEventListener('click', appendPoint);
+deleteButton.addEventListener('click', deletefunc);
+clearButton.addEventListener('click', clearfunc);
+equalsButton.addEventListener('click', evaluate);
 
 numberButtons.forEach(button => {
   button.addEventListener('click', () => displayNumber(button.textContent))
 })
-pointButton
+operationButtons.forEach(button => {
+  button.addEventListener('click', () => setOperation(button.textContent))
+})
 
 function displayNumber(number) {
   if (currentScreen.textContent === '0' || resetScreen) {
@@ -44,6 +50,7 @@ function screenReset() {
 }
 function clearfunc() {
   currentScreen.textContent = '0';
+  previousScreen.textContent = '';
   currentOperator = null;
   firstOperand = '';
   secondOperand = '';
@@ -52,36 +59,85 @@ function clearfunc() {
 function deletefunc() {
   currentScreen.textContent = (currentScreen.textContent).toString().slice(0, -1);
 }
+function keyboardInput(e) {
+  if (e.key >= 0 && e.key <= 9) { displayNumber(e.key) }
+  if (e.key === '.') { appendPoint() }
+  if (e.key === 'Backspace') { deletefunc() }
+  if (e.key === 'Escape') { clearfunc() }
+  if (e.key === '*' || e.key === '/' || e.key === '+' || e.key === '-' || e.key === '%' || e.key === '^') {
+    setOperation(e.key);
+  }
+  if (e.key === '=') { evaluate() }
+}
+function setOperation(operation) {
+  if (currentOperator !== null) { evaluate() }
+  firstOperand = currentScreen.textContent;
+  currentOperator = operation;
+  previousScreen.textContent = `${firstOperand} ${currentOperator}`;
+  resetScreen = true;
+
+}
 
 
-
+function evaluate() {
+  if (currentOperator === null || resetScreen) { return }
+  if (currentOperator === '/' && currentScreen.textContent === '0') {
+    alert('Math Error')
+    return;
+  }
+  secondOperand = currentScreen.textContent;
+  previousScreen.textContent = `${firstOperand}${currentOperator}${secondOperand}`
+  currentScreen.textContent = operate(currentOperator, firstOperand, secondOperand);
+  currentOperator = null;
+}
 
 
 
 
 function operate(operation, operandone, operandtwo) {
+  operandone = Number(operandone);
+  operandtwo = Number(operandtwo);
+  if (operation === '+') {
+    return add(operandone, operandtwo);
+  }
+  if (operation === '-') {
+    return subtract(operandone, operandtwo);
+  }
+  if (operation === '/') {
+    return divide(operandone, operandtwo);
+  }
+  if (operation === '*') {
+    return multiply(operandone, operandtwo);
+  }
+  if (operation === '^') {
+    return power(operandone, operandtwo);
+  }
+  if (operation === '%') {
+    return mod(operandone, operandtwo);
+  }
 
+  return null;
 }
-const add = function (a, b) {
+
+function add(a, b) {
   return a + b;
 };
 
-const subtract = function (a, b) {
+function subtract(a, b) {
   return a - b;
 };
-const divide = function (a, b) {
+function divide(a, b) {
   return a / b;
 }
-const sum = function (array) {
-  return array.reduce((total, current) => total + current, 0);
-};
 
-const multiply = function (array) {
-  return array.length
-    ? array.reduce((accumulator, nextItem) => accumulator * nextItem)
-    : 0;
-};
 
-const power = function (a, b) {
+function multiply(a, b) {
+  return a * b;
+}
+
+function power(a, b) {
   return Math.pow(a, b);
 };
+function mod(a, b) {
+  return a % b;
+}
