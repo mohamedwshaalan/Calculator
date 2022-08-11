@@ -113,6 +113,13 @@ button:hover {
   transition: 0.05s;
 }
 
+.point:active {
+  background-color: darkcyan;
+  color: black;
+  border-color: black;
+  transition: 0.05s;
+}
+
 .erase-key:active {
   background-color: orangered;
   color: black;

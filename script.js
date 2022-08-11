@@ -1,4 +1,4 @@
-console.log("Testing");
+
 let firstOperand = '';
 let secondOperand = '';
 let currentOperator = null;
@@ -9,17 +9,18 @@ let resetScreen = false;
 const currentScreen = document.getElementById('current-screen')
 const previousScreen = document.getElementById('previous-screen')
 const numberButtons = document.querySelectorAll('.number')
+const pointButton = document.querySelector('.point')
 //Functions
+pointButton.addEventListener('click', () => appendPoint());
 
-
-numberButtons.forEach((button) =>
-  button.addEventListener('click', displayNumber(button.textContent))
-
-)
+numberButtons.forEach(button => {
+  button.addEventListener('click', () => displayNumber(button.textContent))
+})
+pointButton
 
 function displayNumber(number) {
   if (currentScreen.textContent === '0' || resetScreen) {
-    resetScreen();
+    screenReset();
   }
   currentScreen.textContent += number;
 }
@@ -27,7 +28,15 @@ function screenReset() {
   currentScreen.textContent = '';
   resetScreen = false;
 }
-
+function appendPoint() {
+  if (currentScreen.textContent === '0' || resetScreen) {
+    screenReset();
+  }
+  if (currentScreen.textContent.includes('.')) {
+    return;
+  }
+  currentScreen.textContent += '.';
+}
 
 
 
