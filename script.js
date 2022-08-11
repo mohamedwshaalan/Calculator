@@ -10,8 +10,12 @@ const currentScreen = document.getElementById('current-screen')
 const previousScreen = document.getElementById('previous-screen')
 const numberButtons = document.querySelectorAll('.number')
 const pointButton = document.querySelector('.point')
+const clearButton = document.getElementById('clear')
+const deleteButton = document.getElementById('delete')
 //Functions
 pointButton.addEventListener('click', () => appendPoint());
+deleteButton.addEventListener('click', () => deletefunc());
+clearButton.addEventListener('click', () => clearfunc());
 
 numberButtons.forEach(button => {
   button.addEventListener('click', () => displayNumber(button.textContent))
@@ -24,10 +28,7 @@ function displayNumber(number) {
   }
   currentScreen.textContent += number;
 }
-function screenReset() {
-  currentScreen.textContent = '';
-  resetScreen = false;
-}
+
 function appendPoint() {
   if (currentScreen.textContent === '0' || resetScreen) {
     screenReset();
@@ -37,6 +38,24 @@ function appendPoint() {
   }
   currentScreen.textContent += '.';
 }
+function screenReset() {
+  currentScreen.textContent = '';
+  resetScreen = false;
+}
+function clearfunc() {
+  currentScreen.textContent = '0';
+  currentOperator = null;
+  firstOperand = '';
+  secondOperand = '';
+
+}
+function deletefunc() {
+  currentScreen.textContent = (currentScreen.textContent).toString().slice(0, -1);
+}
+
+
+
+
 
 
 
